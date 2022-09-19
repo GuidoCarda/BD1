@@ -175,7 +175,11 @@ INSERT INTO envios_voluntarios (envio_id,voluntario_id)
   (8,3),
   (8,6)
 
+-- e - Agregarle a la tabla ciudad un campo que se llame pais
+ALTER TABLE ciudades ADD pais VARCHAR(30)
 
+-- f - Completar todos los registros con Argentina
+UPDATE ciudades SET pais = "Argentina"
 
 -- g - Cambiar la cantidad de caracteres que podés guardar en el nombre del socio, de forma tal que permita ingresar 5 caracteres más
 
@@ -194,3 +198,16 @@ CREATE TABLE paises (
   id INT PRIMARY KEY AUTO_INCREMENT,
   nombre VARCHAR(30)
 )
+
+-- k - Cargar Argentina, Colombia y Chile
+
+INSERT INTO paises (nombre) VALUES ("Argentina","Colombia","Chile")
+
+-- m - Modificar el campo pais de la tabla ciudad y vincularlo con el id de Pais de la tabla pais
+
+-- Creo la primary key
+ALTER TABLE ciudades CHANGE pais pais_id INT;
+ALTER TABLE ciudades ADD FOREIGN KEY (pais_id) REFERENCES paises(id);
+
+-- Modifico los valores
+UPDATE ciudades SET pais_id = 1
