@@ -1,0 +1,43 @@
+CREATE DATABASE musimundo
+
+CREATE TABLE aparatos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    descripcion VARCHAR(255)
+)
+
+CREATE TABLE componentes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50),
+    precio DECIMAL(9,2),
+    especificaciones VARCHAR(255),
+    ID_fabricante INT,
+    FOREIGN KEY (ID_fabricante) REFERENCES fabricantes(id)
+)
+
+CREATE TABLE fabricantes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    domicilio VARCHAR(50)
+)
+
+CREATE TABLE tipos_electrodomesticos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50),
+    caracteristicas VARCHAR(255)
+)
+
+CREATE TABLE aparatos_componentes (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    ID_aparato INT,
+    ID_componente INT,
+    cantidad INT,
+    FOREIGN KEY (ID_aparato) REFERENCES aparatos(id),
+    FOREIGN KEY (ID_componente) REFERENCES componentes(id)
+)
+
+CREATE TABLE aparatos_tipos (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    ID_aparato INT,
+    ID_tipo INT,
+    FOREIGN KEY (ID_aparato) REFERENCES aparatos(id),
+    FOREIGN KEY (ID_tipo) REFERENCES tipos_electrodomesticos(id)
+)
