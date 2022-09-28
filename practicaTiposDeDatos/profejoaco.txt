@@ -1,0 +1,14 @@
+SELECT pedidos.id as codigo, 
+	   clientes.nombre as nombreCliente,
+       vendedores.nombre as nombreVendedor,
+       pedidos.fecha as fechaPedido
+   
+FROM pedidos
+
+INNER JOIN clientes ON clientes.id = pedidos.cliente_id
+INNER JOIN vendedores ON vendedores.id = pedidos.vendedor_id
+
+WHERE pedidos.estado like '%Pendiente%'
+
+
+SELECT nombre from clientes where limite_cred=(SELECT MAX(limite_cred) from clientes) or limite_cred=(SELECT min(limite_cred) FROM clientes)
