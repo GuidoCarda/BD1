@@ -60,6 +60,7 @@ CREATE TABLE pedidos_productos (
   producto_id INT,
   pedido_id INT,
   cant INT,
+  precio_total decimal(9,2),
   FOREIGN KEY (producto_id) REFERENCES productos(id),
   FOREIGN KEY (pedido_id) REFERENCES pedidos(id)
 )
@@ -100,3 +101,54 @@ FROM pedidos p
 
 INNER JOIN clientes cl 
 ON p.cliente_id = cl.id 
+
+-- 8. Devuelve un listado con el código de pedido, nombre del cliente, nombre del empleado  y fecha del pedido de los pedidos pendientes
+
+SELECT pedidos.id AS codigoPedido, clientes.nombre, vendedores.nombre, fecha FROM pedidos 
+
+INNER JOIN clientes cl 
+ON pedidos.cliente_id = cliente.id 
+
+
+
+-- Dictados
+
+-- 1 - Mostrar los nombres precio y stock de productos ordenados en forma descendente por precio 
+
+SELECT nombre, precio, stock FROM productos ORDER BY precio DESC
+
+-- 2 - Ídem ejercicio anterior pero mostrando además el nombre de la gama de c/producto
+
+SELECT productos.nombre, productos.precio, productos.stock, gamas.nombre as gama
+from productos, gamas 
+
+WHERE productos.gama_id = gamas.id
+
+ORDER BY precio DESC 
+
+-- 3 - Aumentar el precio de los productos un 10%
+
+UPDATE productos SET precio = precio + (precio * 0.1)
+
+-- 4- Mostrar el ID del pedido , fecha, estado, nombre del empleado que lo hizo y el nombre del cliente 
+
+SELECT p.id, p.fecha, p.estado as estado_pedido, v.nombre as vendedor, cl.nombre as cliente 
+
+FROM pedidos p, vendedores v, clientes cl 
+
+WHERE (p.vendedor_id = v.id AND p.cliente_id = cl.id)
+
+-- 5 - Ídem anterior pero solamente los de mes actual 
+
+SELECT p.id, p.fecha, p.estado, v.nombre as vendedor, cl.nombre as cliente 
+FROM pedidos p, vendedores v, clientes cl 
+WHERE (p.vendedor_id = v.id AND p.cliente_id = cl.id AND month(p.fecha) = '01')
+
+
+-- 6 - Modificar el estado de todos los pedidos que realizo el cliente Daniel G a rechazado 
+
+UPDATE TABLE pedidos SET estado = 'rechazado' where id = 1
+
+-- 7 - Subir el límite de compra un 15% de aquellos clientes que son de rosario 
+
+UPDATE clientes SET limite_cred = limite_cred + (limite_cred*0.15)
