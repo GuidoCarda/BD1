@@ -12,4 +12,4 @@ CREATE TABLE pedidos (
 -- Between is inclusive, begin and end values are included
 -- For example in this case, if I used between inside the check conditional it would be wrong because It included 0 and 200
 
-INSERT INTO pedidos VALUEs (1, 1, "muzzarella", 600.25, 2, "gutierrez 33")
+INSERT INTO pedidos VALUES (1, 1, "muzzarella", 600.25, 2, "gutierrez 33")
