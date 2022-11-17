@@ -134,6 +134,44 @@ SELECT id, nombre FROM vendedores WHERE nombre like 'm%'
 -- 17 - Mostrar los id y nombres de los empleados cuyo nombres sean Daniel  Dartes y Mariana Juarez(Usar IN)
 SELECT id, nombres FROM vendedores  WHERE nombre IN ('Daniel Dartes','Mariana Juarez')
 
+-- 18 - Mostrar los nombres de los empleados que son de alguna oficina de la ciudad de Rosario.
+SELECT nombre FROM vendedores WHERE ciudad like '%Ros%'
+
+
+------------------ AIUDA JOACO ------------------
+-- 19  - Mostrar los nombres de los empleados de la empresa, junto al nombre de sus jefes.
+SELECT v.nombre, v.jefe_id as nombre_jefe, v.ciudad 
+FROM vendedores v 
+INNER JOIN vendedores ON v.jefe_id = vendedores.nombre
+------------------ AIUDA JOACO ------------------
+
+-- 20 -Mostrar los nombres de los empleados de la empresa, junto al nombre de sus jefes, pero solo los que son de la ciudad de Rosario o de Funes
+
+
+
+------------------ AIUDA JOACO ------------------
+-- 21- Mostrar los nombres de los empleados de la empresa, junto al nombre de sus jefes, pero solo los que son de la ciudad de Rosario o de Funes y cuyo jefe sea "Marcos Perez"
+
+SELECT v.nombre, v.jefe_id as nombre_jefe, v.ciudad 
+FROM vendedores v 
+INNER JOIN vendedores ON v.jefe_id = vendedores.nombre
+WHERE (v.ciudad like '%ros%') OR (v.ciudad like '%fun%') 
+
+/*
+-- El problema aca es q me tira este error 
+------------------------------------------------------------------------
+ Warning: #1292 Equivocado truncado DOUBLE valor: 'Marcos Perez'
+------------------------------------------------------------------------
+Por lo q vi es porque cuando hago esto : ...ON v.jefe_id = vendedores.nombre
+SQL toma q no puede igualar un INT a un VARCHAR
+
+si pongo ON v.jefe_id = vendedores.id
+Si lo ejecuta perono me interesa porque yo no quiero mostrar el nro de id,
+quiero el nombre
+
+------------------ AIUDA JOACO ------------------
+*/
+
 -- Dictados
 
 -- 1 - Mostrar los nombres precio y stock de productos ordenados en forma descendente por precio 
