@@ -147,8 +147,6 @@ INNER JOIN vendedores ON v.jefe_id = vendedores.nombre
 
 -- 20 -Mostrar los nombres de los empleados de la empresa, junto al nombre de sus jefes, pero solo los que son de la ciudad de Rosario o de Funes
 
-
-
 ------------------ AIUDA JOACO ------------------
 -- 21- Mostrar los nombres de los empleados de la empresa, junto al nombre de sus jefes, pero solo los que son de la ciudad de Rosario o de Funes y cuyo jefe sea "Marcos Perez"
 
@@ -175,15 +173,84 @@ quiero el nombre
 -- Dictados
 
 -- 1 - Mostrar los nombres precio y stock de productos ordenados en forma descendente por precio 
+SELECT nombre, precio, stock FROM productos ORDER BY precio DESC
 
 -- 2 - Ídem ejercicio anterior pero mostrando además el nombre de la gama de c/producto
+SELECT p.nombre, p.precio, p.stock, g.nombre 
+FROM productos p, gamas g
+WHERE p.gama_id = g.id
+ORDER BY p.precio ASC
 
 -- 3 - Aumentar el precio de los productos un 10%
+UPDATE productos SET precio = precio + (precio * 10 / 100)
 
 -- 4- Mostrar el ID del pedido , fecha, estado, nombre del empleado que lo hizo y el nombre del cliente 
+SELECT ped.id as pedido_id, ped.fecha as fecha_pedido, ped.estado as estado_pedido, v.nombre as vendedor, cl.nombre as cliente
+FROM pedidos ped, vendedores v, clientes cl
+WHERE ped.cliente_id = cl.id AND ped.vendedor_id = v.id
 
 -- 5 - Ídem anterior pero solamente los de mes actual 
+SELECT ped.id as pedido_id, ped.fecha as fecha_pedido, ped.estado as estado_pedido, v.nombre as vendedor, cl.nombre as clientes
+FROM pedidos ped, vendedores v, clientes cl
+WHERE MONTH(ped.fecha) = MONTH(GETDATE())
 
--- 6 - Modificar el estado de todos los pedidos que realizo el cliente Daniel G a rechazado 
+SELECT ped.id as pedido_id, ped.fecha as fecha_pedido, ped.estado as estado_pedido, v.nombre as vendedor, cl.nombre as clientes
+FROM pedidos ped, vendedores v, clientes cl
+WHERE ped.cliente_id = cl.id AND ped.vendedor_id = v.id AND  MONTH(ped.fecha) = 11
+
+-- 6 - Modificar el estado de todos los pedidos que realizo el cliente Anne Wright a rechazado 
+UPDATE pedidos SET estado = "rechazado" WHERE pedidos.cliente_id = 
 
 -- 7 - Subir el límite de compra un 15% de aquellos clientes que son de rosario 
+UPDATE clientes SET limite_cred = limite_cred + (limite_cred * 0.15) WHERE clientes.ciudad like '%Ros%'
+
+
+/*
+
+
+-- Crear una tabla
+CREATE TABLE nombre_tabla (
+  nombre_campo tipo_dato,
+  nombre_campo tipo_dato,
+  nombre_campo tipo_dato
+)
+
+
+-- Caracteristicas campos
+
+ NOT NULL - No acepta valores nulos
+
+ UNIQUE - Asegura que todos los valores de una columna sean distintos
+
+ CHECK - Limita el rango de valores que se pueden ingresar Ej:   edad CHECK(edad >= 18)
+ 
+ AUTO_INCREMENT - Permite incrementar automaticamente un numero unico cuando se inserta un nuevo registro a la tabla
+ 
+ UNSIGNED - Acepta solo valores mayores a 0
+ 
+ DEFAULT - Permite definir un valor por defecto a una columna.   Ej   ciudad VARCHAR(50) DEFAULT 'Rosario'
+
+-- Insertar datos en una tabla
+INSERT INTO nombre_tabla (identificadores) VALUES (valores) Con primary key AUTO_INCREMENT
+INSERT INTO nombre_tabla VALUES (valores) Sin AUTO_INCREMENT
+
+-- Alterar estructura de la tabla
+
+-Agrega una columna
+ALTER TABLE nombre_tabla ADD nombre_campo tipo_dato
+
+-Modifica el tipo de dato de una columna
+ALTER TABLE nombre_tabla MODIFY nombre_campo tipo_dato
+
+-Cambiar el nombre de una columna
+ALTER TABLE nombre_tabla CHANGE nombre_anterior nombre_nuevo tipo_dato
+
+-Elimina una columna
+ALTER TABLE nombre_tabla DROP nombre_campo
+
+-- Modificar los datos de una tabla
+UPDATE nombre_tabla SET nombre_campo = valor
+
+SELECT nombre_campos... FROM nombre_tabla WHERE condicion de busqueda ORDER BY nombre_campo ASC|DESC
+
+*/
